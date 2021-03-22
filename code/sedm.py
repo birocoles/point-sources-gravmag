@@ -6,18 +6,37 @@ Bauckhage, C. (2014). NumPy / SciPy Recipes for Data Science: Squared Euclidean
 Distance Matrices, https://dx.doi.org/10.13140/2.1.4426.1127
 '''
 
-# import numpy
-import numpy as np
-# import numpy linear algebra module
-import numpy.linalg as la
-# import scipy spatial module
-import scipy.spatial as spt
-# import numba
+# import numpy 
+import numpy as np 
+# import numpy linear algebra module 
+import numpy.linalg as la 
+# import scipy spatial module 
+import scipy.spatial as spt 
+#import numba 
 from numba import njit
 
 
 # NAÏVE APPROACH
 def naive(P, S):
+    '''
+    Compute the Squared Euclidean Distance Matrix between
+    the points in P and S.
+
+    parameters
+    ----------
+    P: numpy array 2d - 3 x N matrix containing the coordinates 
+        x (1rt row), y (2nd row), z (3rd row) of N points.
+        The ith column represents the ith point.
+    S: numpy array 2d - 3 x M matrix containing the coordinates 
+        x (1rt row), y (2nd row), z (3rd row) of M points.
+        The ith column represents the ith point.
+
+    returns
+    -------
+    D: numpy array 2d - N x M matrix whose elment ij id the 
+        squared Euclidean distance between the ith point in P
+        and the jth point in S.
+    '''
     assert P.ndim == S.ndim == 2, 'P and S must be 2d arrays'
     # determine dimensions of data matrices P and S
     Mp,Np = P.shape
@@ -34,6 +53,25 @@ def naive(P, S):
 
 # AVOIDING SQUARE ROOTS
 def avoid_sqrt(P, S):
+    '''
+    Compute the Squared Euclidean Distance Matrix between
+    the points in P and S.
+
+    parameters
+    ----------
+    P: numpy array 2d - 3 x N matrix containing the coordinates 
+        x (1rt row), y (2nd row), z (3rd row) of N points.
+        The ith column represents the ith point.
+    S: numpy array 2d - 3 x M matrix containing the coordinates 
+        x (1rt row), y (2nd row), z (3rd row) of M points.
+        The ith column represents the ith point.
+
+    returns
+    -------
+    D: numpy array 2d - N x M matrix whose elment ij id the 
+        squared Euclidean distance between the ith point in P
+        and the jth point in S.
+    '''
     assert P.ndim == S.ndim == 2, 'P and S must be 2d arrays'
     # determine dimensions of data matrices P and S
     Mp,Np = P.shape
@@ -51,6 +89,25 @@ def avoid_sqrt(P, S):
 
 # AVOIDING FOR LOOPS
 def avoid_sqrt_inner_loops(P, S):
+    '''
+    Compute the Squared Euclidean Distance Matrix between
+    the points in P and S.
+
+    parameters
+    ----------
+    P: numpy array 2d - 3 x N matrix containing the coordinates 
+        x (1rt row), y (2nd row), z (3rd row) of N points.
+        The ith column represents the ith point.
+    S: numpy array 2d - 3 x M matrix containing the coordinates 
+        x (1rt row), y (2nd row), z (3rd row) of M points.
+        The ith column represents the ith point.
+
+    returns
+    -------
+    D: numpy array 2d - N x M matrix whose elment ij id the 
+        squared Euclidean distance between the ith point in P
+        and the jth point in S.
+    '''
     assert P.ndim == S.ndim == 2, 'P and S must be 2d arrays'
     # determine dimensions of data matrices P and S
     Mp,Np = P.shape
@@ -68,6 +125,25 @@ def avoid_sqrt_inner_loops(P, S):
 
 # OPTIMIZED SCIPY FUNCTION
 def scipy_distance(P, S):
+    '''
+    Compute the Squared Euclidean Distance Matrix between
+    the points in P and S.
+
+    parameters
+    ----------
+    P: numpy array 2d - 3 x N matrix containing the coordinates 
+        x (1rt row), y (2nd row), z (3rd row) of N points.
+        The ith column represents the ith point.
+    S: numpy array 2d - 3 x M matrix containing the coordinates 
+        x (1rt row), y (2nd row), z (3rd row) of M points.
+        The ith column represents the ith point.
+
+    returns
+    -------
+    D: numpy array 2d - N x M matrix whose elment ij id the 
+        squared Euclidean distance between the ith point in P
+        and the jth point in S.
+    '''
     assert P.ndim == S.ndim == 2, 'P and S must be 2d arrays'
     V = spt.distance.cdist(P.T, S.T, 'sqeuclidean')
     #return spt.distance.squareform(V, force='tomatrix')
@@ -77,6 +153,25 @@ def scipy_distance(P, S):
 # NAÏVE APPROACH WITH NUMBA
 @njit
 def naive_numba(P, S):
+    '''
+    Compute the Squared Euclidean Distance Matrix between
+    the points in P and S.
+
+    parameters
+    ----------
+    P: numpy array 2d - 3 x N matrix containing the coordinates 
+        x (1rt row), y (2nd row), z (3rd row) of N points.
+        The ith column represents the ith point.
+    S: numpy array 2d - 3 x M matrix containing the coordinates 
+        x (1rt row), y (2nd row), z (3rd row) of M points.
+        The ith column represents the ith point.
+
+    returns
+    -------
+    D: numpy array 2d - N x M matrix whose elment ij id the 
+        squared Euclidean distance between the ith point in P
+        and the jth point in S.
+    '''
     assert P.ndim == S.ndim == 2, 'P and S must be 2d arrays'
     # determine dimensions of data matrices P and S
     Mp,Np = P.shape
@@ -94,6 +189,25 @@ def naive_numba(P, S):
 # AVOIDING SQUARE ROOTS WITH NUMBA
 @njit
 def avoid_sqrt_numba(P, S):
+    '''
+    Compute the Squared Euclidean Distance Matrix between
+    the points in P and S.
+
+    parameters
+    ----------
+    P: numpy array 2d - 3 x N matrix containing the coordinates 
+        x (1rt row), y (2nd row), z (3rd row) of N points.
+        The ith column represents the ith point.
+    S: numpy array 2d - 3 x M matrix containing the coordinates 
+        x (1rt row), y (2nd row), z (3rd row) of M points.
+        The ith column represents the ith point.
+
+    returns
+    -------
+    D: numpy array 2d - N x M matrix whose elment ij id the 
+        squared Euclidean distance between the ith point in P
+        and the jth point in S.
+    '''
     assert P.ndim == S.ndim == 2, 'P and S must be 2d arrays'
     # determine dimensions of data matrices P and S
     Mp,Np = P.shape

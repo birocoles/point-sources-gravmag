@@ -1,8 +1,33 @@
 import numpy as np
 import scipy as sp
 from numpy.testing import assert_almost_equal as aae
-import pytest
+from pytest import raises
 import sedm
+
+
+def test_sedm_functions_bad_arguments():
+    'code must stop for bad arguments'
+    # list of function in sedm
+    functions = [sedm.naive, sedm.avoid_sqrt, sedm.avoid_sqrt_inner_loops,
+                 sedm.naive_numba, sedm.avoid_sqrt_numba]
+
+    # wrong number of rows (it must be 3)
+    P = np.empty((2, 5))
+    S = np.empty((3, 4))
+
+    for f in functions:
+        raises(AssertionError, f, P, S)
+    for f in functions:
+        raises(AssertionError, f, S, P)
+
+    # wrong ndim (it must be 2)
+    P =np.empty(3)
+
+    for f in functions:
+        raises(AssertionError, f, P, S)
+    for f in functions:
+        raises(AssertionError, f, S, P)
+
 
 def test_comparison_functions():
     'check if all functions produce the same result'
